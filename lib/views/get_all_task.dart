@@ -53,7 +53,7 @@ class GetAllTaskView extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => GetFavoriteTask()),
+                MaterialPageRoute(builder: (context) => GetFavorite()),
               );
             },
             icon: Icon(Icons.favorite),
@@ -98,33 +98,21 @@ class GetAllTaskView extends StatelessWidget {
                         }
                       },
                     ),
-                    IconButton(
-                      onPressed: () async {
-                        try {
-                          if (taskList[i].favUsers!.contains("1")) {
-                            await TaskServices().removeToFavorite(
-                              userID: "1",
-                              taskID: taskList[i].docId.toString(),
-                            );
-                          } else {
-                            await TaskServices().addToFavorite(
-                              userID: "1",
-                              taskID: taskList[i].docId.toString(),
-                            );
-                          }
-                        } catch (e) {
-                          ScaffoldMessenger.of(
-                            context,
-                          ).showSnackBar(SnackBar(content: Text(e.toString())));
-                        }
-                      },
-                      icon: Icon(
-                        taskList[i].favUsers!.contains("1")
-                            ? Icons.favorite
-                            : Icons.favorite_border,
-                        color: Colors.red,
-                      ),
-                    ),
+                   IconButton(onPressed: ()async{
+                     try{
+                       if(taskList[i].favUsers!.contains("1")){
+                         await TaskServices().removeFromFavorite(
+                             taskID: taskList[i].docId.toString(),
+                             userID: "1");
+                       }else{
+                         TaskServices().addToFavorite(
+                             taskID: taskList[i].docId.toString(),
+                             userID: "1");
+                       }
+                     }catch(e){
+
+                     }
+                   }, icon: Icon(taskList[i].favUsers!.contains("1") ? Icons.favorite : Icons.favorite_border)),
                     IconButton(
                       onPressed: () async {
                         try {

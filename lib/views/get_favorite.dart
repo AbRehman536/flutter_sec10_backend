@@ -1,19 +1,29 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_sec10_backend/views/create_task.dart';
+import 'package:flutter_sec10_backend/views/get_all_priority.dart';
+import 'package:flutter_sec10_backend/views/get_favorite.dart';
+import 'package:flutter_sec10_backend/views/update_task.dart';
 import 'package:provider/provider.dart';
 
 import '../models/task.dart';
 import '../services/task.dart';
+import 'get_completed.dart';
+import 'get_incompleted.dart';
 
-class GetFavoriteTask extends StatelessWidget {
-  const GetFavoriteTask({super.key});
+class GetFavorite extends StatelessWidget {
+  const GetFavorite({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Get Favorite Task")),
+      appBar: AppBar(
+        title: Text("Get Favorite Task"),
+
+      ),
+
       body: StreamProvider.value(
-        value: TaskServices().getMyFavoriteTask("1"),
+        value: TaskServices().getAllFavorite("1"),
         initialData: [TaskModel()],
         builder: (context, child) {
           List<TaskModel> taskList = context.watch<List<TaskModel>>();
