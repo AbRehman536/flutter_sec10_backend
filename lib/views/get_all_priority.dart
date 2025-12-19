@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sec10_backend/models/priority.dart';
 import 'package:flutter_sec10_backend/views/create_priority.dart';
+import 'package:flutter_sec10_backend/views/get_priority_task.dart';
 import 'package:provider/provider.dart';
 
 import '../services/priority.dart';
@@ -82,6 +83,17 @@ class GetPriorityView extends StatelessWidget {
                         );
                       },
                       icon: Icon(Icons.edit, color: Colors.blue),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>GetPriorityTask(model: PriorityModel())
+                          ),
+                        );
+                      },
+                      icon: Icon(Icons.arrow_forward, color: Colors.green),
                     ),
 
                   ],

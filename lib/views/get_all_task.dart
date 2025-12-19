@@ -1,6 +1,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_sec10_backend/views/create_task.dart';
+import 'package:flutter_sec10_backend/views/get_all_priority.dart';
+import 'package:flutter_sec10_backend/views/get_favorite.dart';
 import 'package:flutter_sec10_backend/views/update_task.dart';
 import 'package:provider/provider.dart';
 
@@ -38,6 +40,24 @@ class GetAllTaskView extends StatelessWidget {
             },
             icon: Icon(Icons.circle),
           ),
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => GetPriorityView()),
+              );
+            },
+            icon: Icon(Icons.category),
+          ),
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => GetFavoriteTask()),
+              );
+            },
+            icon: Icon(Icons.favorite),
+          ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
@@ -61,7 +81,6 @@ class GetAllTaskView extends StatelessWidget {
                 leading: Icon(Icons.task),
                 title: Text(taskList[i].title.toString()),
                 subtitle: Text(taskList[i].description.toString()),
-
                 trailing: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -78,6 +97,33 @@ class GetAllTaskView extends StatelessWidget {
                           ).showSnackBar(SnackBar(content: Text(e.toString())));
                         }
                       },
+                    ),
+                    IconButton(
+                      onPressed: () async {
+                        try {
+                          if (taskList[i].favUsers!.contains("1")) {
+                            await TaskServices().removeToFavorite(
+                              userID: "1",
+                              taskID: taskList[i].docId.toString(),
+                            );
+                          } else {
+                            await TaskServices().addToFavorite(
+                              userID: "1",
+                              taskID: taskList[i].docId.toString(),
+                            );
+                          }
+                        } catch (e) {
+                          ScaffoldMessenger.of(
+                            context,
+                          ).showSnackBar(SnackBar(content: Text(e.toString())));
+                        }
+                      },
+                      icon: Icon(
+                        taskList[i].favUsers!.contains("1")
+                            ? Icons.favorite
+                            : Icons.favorite_border,
+                        color: Colors.red,
+                      ),
                     ),
                     IconButton(
                       onPressed: () async {

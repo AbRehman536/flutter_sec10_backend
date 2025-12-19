@@ -1,5 +1,7 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_sec10_backend/models/priority.dart';
+import 'package:flutter_sec10_backend/services/priority.dart';
 import 'package:provider/provider.dart';
 
 import '../models/task.dart';
@@ -16,7 +18,17 @@ class _CreateTaskViewState extends State<CreateTaskView> {
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   bool isLoading = false;
-
+  
+  List<PriorityModel> priorityList = [];
+  PriorityModel? _selectedPriority;
+  
+  @override 
+  void initState(){
+    PriorityServices().getPriorities().then((value){
+      priorityList = value;
+      setState(() {});
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +38,17 @@ class _CreateTaskViewState extends State<CreateTaskView> {
         children: [
           TextField(controller: titleController),
           TextField(controller: descriptionController),
+          DropdownButton(
+              hint: Text("Select Priority"),
+              value: _selectedPriority,
+              items: priorityList.map((e){
+                return DropdownMenuItem(child: Text(e.toString()));
+              }).toList(),
+              onChanged: (value){
+                setState(() {
+                  _selectedPriority = value;
+                });
+              }),
           SizedBox(height: 20),
           isLoading
               ? Center(child: CircularProgressIndicator())
@@ -50,6 +73,7 @@ class _CreateTaskViewState extends State<CreateTaskView> {
                   TaskModel(
                     title: titleController.text,
                     description: descriptionController.text,
+                    priorityID: _selectedPriority?.docId.toString(),
                     isCompleted: false,
                     createdAt: DateTime.now().millisecondsSinceEpoch,
                   ),
