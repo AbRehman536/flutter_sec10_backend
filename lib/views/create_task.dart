@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_sec10_backend/models/priority.dart';
+import 'package:flutter_sec10_backend/provider/user.dart';
 import 'package:flutter_sec10_backend/services/priority.dart';
 import 'package:provider/provider.dart';
 
@@ -32,6 +33,7 @@ class _CreateTaskViewState extends State<CreateTaskView> {
 
   @override
   Widget build(BuildContext context) {
+    var userProvider = Provider.of<UserProvider>(context);
     return Scaffold(
       appBar: AppBar(title: Text("Create Task")),
       body: Column(
@@ -75,6 +77,7 @@ class _CreateTaskViewState extends State<CreateTaskView> {
                     description: descriptionController.text,
                     priorityID: _selectedPriority?.docId.toString(),
                     isCompleted: false,
+                    userID: userProvider.getUser().docId.toString(),
                     createdAt: DateTime.now().millisecondsSinceEpoch,
                   ),
                 )

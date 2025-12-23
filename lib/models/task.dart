@@ -3,6 +3,7 @@ class TaskModel {
   final String? title;
   final String? description;
   final String? priorityID;
+  final String? userID;
   final List<String>? favUsers;
   final bool? isCompleted;
   final int? createdAt;
@@ -12,6 +13,7 @@ class TaskModel {
     this.title,
     this.description,
     this.priorityID,
+    this.userID,
     this.favUsers,
     this.isCompleted,
     this.createdAt,
@@ -21,6 +23,7 @@ class TaskModel {
     return TaskModel(
       docId: json["docID"],
       title: json["title"],
+      userID: json["userID"],
       description: json["description"],
       priorityID: json["priorityID"],
       favUsers: json["favUsers"] == null
@@ -35,6 +38,7 @@ class TaskModel {
     return {
       "docID": taskID,
       "title": title,
+      "userID": userID,
       "description": description,
      "priorityID": priorityID,
       "favUsers": favUsers == null
