@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_sec10_backend/views/create_task.dart';
 import 'package:flutter_sec10_backend/views/get_all_priority.dart';
 import 'package:flutter_sec10_backend/views/get_favorite.dart';
+import 'package:flutter_sec10_backend/views/profile.dart';
 import 'package:flutter_sec10_backend/views/update_task.dart';
 import 'package:provider/provider.dart';
 
@@ -57,6 +58,15 @@ class GetAllTaskView extends StatelessWidget {
               );
             },
             icon: Icon(Icons.favorite),
+          ),
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => GetProfile()),
+              );
+            },
+            icon: Icon(Icons.person),
           ),
         ],
       ),
